@@ -16,16 +16,17 @@ namespace rpc_client
             msg.Num.Add(15);
             msg.Num.Add(18);
             var reply = client.SayHello(msg);
-
+            
             Console.WriteLine("Greeting: " + reply.Message);
 
             var  calcclient=new  Calc.CalcClient(channel);
-
+            
             var result= calcclient.GetSum(new SndNum { Num1 = 5, Num2 = 7 });
+
             Console.WriteLine($"result{ result}");
             //var res = client.GetSq(new SndNum { Num = 50 });
             //Console.WriteLine("msg"+res.Num);
-            channel.ShutdownAsync().Wait();
+            //channel.ShutdownAsync().Wait();
             Console.WriteLine("Press any key to exit...");
             Console.ReadKey();
         }

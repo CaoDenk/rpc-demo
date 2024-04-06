@@ -1,0 +1,30 @@
+syntax="proto3";
+service Greeter {
+  // Sends a greeting
+  rpc SayHello (HelloRequest) returns (HelloReply) {}
+}
+
+// The request message containing the user's name.
+message HelloRequest {
+  string name = 1;
+  repeated int32 num=2;
+}
+
+// The response message containing the greetings
+message HelloReply {
+  string message = 1;
+}
+
+message SndNum{
+	int32 num1=1;
+	int32 num2=2;
+}
+message RecvNum{
+	int32 num=1;
+}
+// The greeting service definition.
+service Calc {
+  // Sends a greeting
+
+  rpc GetSum(SndNum) returns (RecvNum);
+}
