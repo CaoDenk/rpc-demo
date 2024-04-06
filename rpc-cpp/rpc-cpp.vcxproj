@@ -18,6 +18,9 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -126,25 +129,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="greeter.grpc.pb.cc" />
-    <ClCompile Include="greeter.pb.cc" />
-    <ClCompile Include="main.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="server.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="greeter.proto">
-      <FileType>Document</FileType>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </Command>
-    </CustomBuild>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="greeter.grpc.pb.h" />
-    <ClInclude Include="greeter.pb.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
