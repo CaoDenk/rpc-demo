@@ -235,5 +235,214 @@ class Greeter final {
   typedef WithStreamedUnaryMethod_SayHello<Service > StreamedService;
 };
 
+// The greeting service definition.
+class Calc final {
+ public:
+  static constexpr char const* service_full_name() {
+    return "Calc";
+  }
+  class StubInterface {
+   public:
+    virtual ~StubInterface() {}
+    virtual ::grpc::Status GetSum(::grpc::ClientContext* context, const ::SndNum& request, ::RecvNum* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>> AsyncGetSum(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>>(AsyncGetSumRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>> PrepareAsyncGetSum(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>>(PrepareAsyncGetSumRaw(context, request, cq));
+    }
+    class async_interface {
+     public:
+      virtual ~async_interface() {}
+      virtual void GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+    };
+    typedef class async_interface experimental_async_interface;
+    virtual class async_interface* async() { return nullptr; }
+    class async_interface* experimental_async() { return async(); }
+   private:
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>* AsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::RecvNum>* PrepareAsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) = 0;
+  };
+  class Stub final : public StubInterface {
+   public:
+    Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+    ::grpc::Status GetSum(::grpc::ClientContext* context, const ::SndNum& request, ::RecvNum* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RecvNum>> AsyncGetSum(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RecvNum>>(AsyncGetSumRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RecvNum>> PrepareAsyncGetSum(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::RecvNum>>(PrepareAsyncGetSumRaw(context, request, cq));
+    }
+    class async final :
+      public StubInterface::async_interface {
+     public:
+      void GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, std::function<void(::grpc::Status)>) override;
+      void GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, ::grpc::ClientUnaryReactor* reactor) override;
+     private:
+      friend class Stub;
+      explicit async(Stub* stub): stub_(stub) { }
+      Stub* stub() { return stub_; }
+      Stub* stub_;
+    };
+    class async* async() override { return &async_stub_; }
+
+   private:
+    std::shared_ptr< ::grpc::ChannelInterface> channel_;
+    class async async_stub_{this};
+    ::grpc::ClientAsyncResponseReader< ::RecvNum>* AsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::RecvNum>* PrepareAsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) override;
+    const ::grpc::internal::RpcMethod rpcmethod_GetSum_;
+  };
+  static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
+
+  class Service : public ::grpc::Service {
+   public:
+    Service();
+    virtual ~Service();
+    virtual ::grpc::Status GetSum(::grpc::ServerContext* context, const ::SndNum* request, ::RecvNum* response);
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetSum() {
+      ::grpc::Service::MarkMethodAsync(0);
+    }
+    ~WithAsyncMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSum(::grpc::ServerContext* context, ::SndNum* request, ::grpc::ServerAsyncResponseWriter< ::RecvNum>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_GetSum<Service > AsyncService;
+  template <class BaseClass>
+  class WithCallbackMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetSum() {
+      ::grpc::Service::MarkMethodCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::SndNum, ::RecvNum>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::SndNum* request, ::RecvNum* response) { return this->GetSum(context, request, response); }));}
+    void SetMessageAllocatorFor_GetSum(
+        ::grpc::MessageAllocator< ::SndNum, ::RecvNum>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(0);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::SndNum, ::RecvNum>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSum(
+      ::grpc::CallbackServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_GetSum<Service > CallbackService;
+  typedef CallbackService ExperimentalCallbackService;
+  template <class BaseClass>
+  class WithGenericMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetSum() {
+      ::grpc::Service::MarkMethodGeneric(0);
+    }
+    ~WithGenericMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetSum() {
+      ::grpc::Service::MarkMethodRaw(0);
+    }
+    ~WithRawMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetSum(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(0, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetSum() {
+      ::grpc::Service::MarkMethodRawCallback(0,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetSum(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* GetSum(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_GetSum : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_GetSum() {
+      ::grpc::Service::MarkMethodStreamed(0,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::SndNum, ::RecvNum>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::SndNum, ::RecvNum>* streamer) {
+                       return this->StreamedGetSum(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_GetSum() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetSum(::grpc::ServerContext* /*context*/, const ::SndNum* /*request*/, ::RecvNum* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedGetSum(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::SndNum,::RecvNum>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_GetSum<Service > StreamedUnaryService;
+  typedef Service SplitStreamedService;
+  typedef WithStreamedUnaryMethod_GetSum<Service > StreamedService;
+};
+// Sends a greeting
+
 
 #endif  // GRPC_greeter_2eproto__INCLUDED

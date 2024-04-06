@@ -50,9 +50,17 @@ extern HelloReplyDefaultTypeInternal _HelloReply_default_instance_;
 class HelloRequest;
 struct HelloRequestDefaultTypeInternal;
 extern HelloRequestDefaultTypeInternal _HelloRequest_default_instance_;
+class RecvNum;
+struct RecvNumDefaultTypeInternal;
+extern RecvNumDefaultTypeInternal _RecvNum_default_instance_;
+class SndNum;
+struct SndNumDefaultTypeInternal;
+extern SndNumDefaultTypeInternal _SndNum_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::HelloReply* Arena::CreateMaybeMessage<::HelloReply>(Arena*);
 template<> ::HelloRequest* Arena::CreateMaybeMessage<::HelloRequest>(Arena*);
+template<> ::RecvNum* Arena::CreateMaybeMessage<::RecvNum>(Arena*);
+template<> ::SndNum* Arena::CreateMaybeMessage<::SndNum>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 
 // ===================================================================
@@ -178,8 +186,31 @@ class HelloRequest final :
   // accessors -------------------------------------------------------
 
   enum : int {
+    kNumFieldNumber = 2,
     kNameFieldNumber = 1,
   };
+  // repeated int32 num = 2;
+  int num_size() const;
+  private:
+  int _internal_num_size() const;
+  public:
+  void clear_num();
+  private:
+  int32_t _internal_num(int index) const;
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+      _internal_num() const;
+  void _internal_add_num(int32_t value);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+      _internal_mutable_num();
+  public:
+  int32_t num(int index) const;
+  void set_num(int index, int32_t value);
+  void add_num(int32_t value);
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+      num() const;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+      mutable_num();
+
   // string name = 1;
   void clear_name();
   const std::string& name() const;
@@ -202,6 +233,8 @@ class HelloRequest final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   struct Impl_ {
+    ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t > num_;
+    mutable std::atomic<int> _num_cached_byte_size_;
     ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
     mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   };
@@ -361,6 +394,313 @@ class HelloReply final :
   union { Impl_ _impl_; };
   friend struct ::TableStruct_greeter_2eproto;
 };
+// -------------------------------------------------------------------
+
+class SndNum final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:SndNum) */ {
+ public:
+  inline SndNum() : SndNum(nullptr) {}
+  ~SndNum() override;
+  explicit PROTOBUF_CONSTEXPR SndNum(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SndNum(const SndNum& from);
+  SndNum(SndNum&& from) noexcept
+    : SndNum() {
+    *this = ::std::move(from);
+  }
+
+  inline SndNum& operator=(const SndNum& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SndNum& operator=(SndNum&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SndNum& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SndNum* internal_default_instance() {
+    return reinterpret_cast<const SndNum*>(
+               &_SndNum_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    2;
+
+  friend void swap(SndNum& a, SndNum& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SndNum* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SndNum* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SndNum* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SndNum>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SndNum& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const SndNum& from) {
+    SndNum::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SndNum* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "SndNum";
+  }
+  protected:
+  explicit SndNum(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNum1FieldNumber = 1,
+    kNum2FieldNumber = 2,
+  };
+  // int32 num1 = 1;
+  void clear_num1();
+  int32_t num1() const;
+  void set_num1(int32_t value);
+  private:
+  int32_t _internal_num1() const;
+  void _internal_set_num1(int32_t value);
+  public:
+
+  // int32 num2 = 2;
+  void clear_num2();
+  int32_t num2() const;
+  void set_num2(int32_t value);
+  private:
+  int32_t _internal_num2() const;
+  void _internal_set_num2(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:SndNum)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t num1_;
+    int32_t num2_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_greeter_2eproto;
+};
+// -------------------------------------------------------------------
+
+class RecvNum final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:RecvNum) */ {
+ public:
+  inline RecvNum() : RecvNum(nullptr) {}
+  ~RecvNum() override;
+  explicit PROTOBUF_CONSTEXPR RecvNum(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  RecvNum(const RecvNum& from);
+  RecvNum(RecvNum&& from) noexcept
+    : RecvNum() {
+    *this = ::std::move(from);
+  }
+
+  inline RecvNum& operator=(const RecvNum& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline RecvNum& operator=(RecvNum&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const RecvNum& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const RecvNum* internal_default_instance() {
+    return reinterpret_cast<const RecvNum*>(
+               &_RecvNum_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    3;
+
+  friend void swap(RecvNum& a, RecvNum& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(RecvNum* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(RecvNum* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  RecvNum* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<RecvNum>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const RecvNum& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom( const RecvNum& from) {
+    RecvNum::MergeImpl(*this, from);
+  }
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message& to_msg, const ::PROTOBUF_NAMESPACE_ID::Message& from_msg);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _impl_._cached_size_.Get(); }
+
+  private:
+  void SharedCtor(::PROTOBUF_NAMESPACE_ID::Arena* arena, bool is_message_owned);
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(RecvNum* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "RecvNum";
+  }
+  protected:
+  explicit RecvNum(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNumFieldNumber = 1,
+  };
+  // int32 num = 1;
+  void clear_num();
+  int32_t num() const;
+  void set_num(int32_t value);
+  private:
+  int32_t _internal_num() const;
+  void _internal_set_num(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:RecvNum)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  struct Impl_ {
+    int32_t num_;
+    mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  };
+  union { Impl_ _impl_; };
+  friend struct ::TableStruct_greeter_2eproto;
+};
 // ===================================================================
 
 
@@ -422,6 +762,53 @@ inline void HelloRequest::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:HelloRequest.name)
 }
 
+// repeated int32 num = 2;
+inline int HelloRequest::_internal_num_size() const {
+  return _impl_.num_.size();
+}
+inline int HelloRequest::num_size() const {
+  return _internal_num_size();
+}
+inline void HelloRequest::clear_num() {
+  _impl_.num_.Clear();
+}
+inline int32_t HelloRequest::_internal_num(int index) const {
+  return _impl_.num_.Get(index);
+}
+inline int32_t HelloRequest::num(int index) const {
+  // @@protoc_insertion_point(field_get:HelloRequest.num)
+  return _internal_num(index);
+}
+inline void HelloRequest::set_num(int index, int32_t value) {
+  _impl_.num_.Set(index, value);
+  // @@protoc_insertion_point(field_set:HelloRequest.num)
+}
+inline void HelloRequest::_internal_add_num(int32_t value) {
+  _impl_.num_.Add(value);
+}
+inline void HelloRequest::add_num(int32_t value) {
+  _internal_add_num(value);
+  // @@protoc_insertion_point(field_add:HelloRequest.num)
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+HelloRequest::_internal_num() const {
+  return _impl_.num_;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >&
+HelloRequest::num() const {
+  // @@protoc_insertion_point(field_list:HelloRequest.num)
+  return _internal_num();
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+HelloRequest::_internal_mutable_num() {
+  return &_impl_.num_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedField< int32_t >*
+HelloRequest::mutable_num() {
+  // @@protoc_insertion_point(field_mutable_list:HelloRequest.num)
+  return _internal_mutable_num();
+}
+
 // -------------------------------------------------------------------
 
 // HelloReply
@@ -476,9 +863,81 @@ inline void HelloReply::set_allocated_message(std::string* message) {
   // @@protoc_insertion_point(field_set_allocated:HelloReply.message)
 }
 
+// -------------------------------------------------------------------
+
+// SndNum
+
+// int32 num1 = 1;
+inline void SndNum::clear_num1() {
+  _impl_.num1_ = 0;
+}
+inline int32_t SndNum::_internal_num1() const {
+  return _impl_.num1_;
+}
+inline int32_t SndNum::num1() const {
+  // @@protoc_insertion_point(field_get:SndNum.num1)
+  return _internal_num1();
+}
+inline void SndNum::_internal_set_num1(int32_t value) {
+  
+  _impl_.num1_ = value;
+}
+inline void SndNum::set_num1(int32_t value) {
+  _internal_set_num1(value);
+  // @@protoc_insertion_point(field_set:SndNum.num1)
+}
+
+// int32 num2 = 2;
+inline void SndNum::clear_num2() {
+  _impl_.num2_ = 0;
+}
+inline int32_t SndNum::_internal_num2() const {
+  return _impl_.num2_;
+}
+inline int32_t SndNum::num2() const {
+  // @@protoc_insertion_point(field_get:SndNum.num2)
+  return _internal_num2();
+}
+inline void SndNum::_internal_set_num2(int32_t value) {
+  
+  _impl_.num2_ = value;
+}
+inline void SndNum::set_num2(int32_t value) {
+  _internal_set_num2(value);
+  // @@protoc_insertion_point(field_set:SndNum.num2)
+}
+
+// -------------------------------------------------------------------
+
+// RecvNum
+
+// int32 num = 1;
+inline void RecvNum::clear_num() {
+  _impl_.num_ = 0;
+}
+inline int32_t RecvNum::_internal_num() const {
+  return _impl_.num_;
+}
+inline int32_t RecvNum::num() const {
+  // @@protoc_insertion_point(field_get:RecvNum.num)
+  return _internal_num();
+}
+inline void RecvNum::_internal_set_num(int32_t value) {
+  
+  _impl_.num_ = value;
+}
+inline void RecvNum::set_num(int32_t value) {
+  _internal_set_num(value);
+  // @@protoc_insertion_point(field_set:RecvNum.num)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 

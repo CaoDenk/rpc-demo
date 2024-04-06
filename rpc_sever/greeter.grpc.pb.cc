@@ -81,3 +81,64 @@ Greeter::Service::~Service() {
 }
 
 
+static const char* Calc_method_names[] = {
+  "/Calc/GetSum",
+};
+
+std::unique_ptr< Calc::Stub> Calc::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
+  (void)options;
+  std::unique_ptr< Calc::Stub> stub(new Calc::Stub(channel, options));
+  return stub;
+}
+
+Calc::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
+  : channel_(channel), rpcmethod_GetSum_(Calc_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  {}
+
+::grpc::Status Calc::Stub::GetSum(::grpc::ClientContext* context, const ::SndNum& request, ::RecvNum* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::SndNum, ::RecvNum, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSum_, context, request, response);
+}
+
+void Calc::Stub::async::GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::SndNum, ::RecvNum, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSum_, context, request, response, std::move(f));
+}
+
+void Calc::Stub::async::GetSum(::grpc::ClientContext* context, const ::SndNum* request, ::RecvNum* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSum_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::RecvNum>* Calc::Stub::PrepareAsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::RecvNum, ::SndNum, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSum_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::RecvNum>* Calc::Stub::AsyncGetSumRaw(::grpc::ClientContext* context, const ::SndNum& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSumRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+Calc::Service::Service() {
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      Calc_method_names[0],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< Calc::Service, ::SndNum, ::RecvNum, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](Calc::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::SndNum* req,
+             ::RecvNum* resp) {
+               return service->GetSum(ctx, req, resp);
+             }, this)));
+}
+
+Calc::Service::~Service() {
+}
+
+::grpc::Status Calc::Service::GetSum(::grpc::ServerContext* context, const ::SndNum* request, ::RecvNum* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+

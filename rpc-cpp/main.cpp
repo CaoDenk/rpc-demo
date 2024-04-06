@@ -11,5 +11,7 @@ int main()
 {
 	auto _call=	std::bind<int(int),int >(call, 10);
 	_call();
-
+	auto t =+ []() {
+		std::cout << "lambda";
+		};
 }
